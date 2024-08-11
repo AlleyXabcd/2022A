@@ -166,7 +166,7 @@ params = {
     'restart_temp_ratio': 1e-4,  # 重启温度比率
     'visit': 2.62,  # 访问参数
     'accept': 5.0,  # 接受参数
-    'maxiter': 1000,  # 最大迭代次数
+    'maxiter': 2000,  # 最大迭代次数
     'maxfun': 10000,  # 最大函数评估次数
 
 }
