@@ -147,51 +147,51 @@ def objective_function(para):
     return P
 
 
-# 边界设置
-bounds = [(0, 100000), (0, 100000)]
+def main():
+    # 边界设置
+    bounds = [(0, 100000), (0, 100000)]
 
-progress = []
+    progress = []
 
+    # 回调函数
+    def callback(x, f, context):
+        print(x)
+        progress.append(f)
 
-# 回调函数
-def callback(x, f, context):
+    # 参数设置
+    params = {
+        'initial_temp': 5230.0,  # 初始温度
+        'restart_temp_ratio': 1e-4,  # 重启温度比率
+        'visit': 2.62,  # 访问参数
+        'accept': 5.0,  # 接受参数
+        'maxiter': 1000,  # 最大迭代次数
+        'maxfun': 20000,  # 最大函数评估次数
 
-    print(x)
-    progress.append(f)
+    }
 
+    # 模拟退火算法
+    result = dual_annealing(objective_function, bounds,
+                            maxiter=params['maxiter'],
+                            initial_temp=params['initial_temp'],
+                            restart_temp_ratio=params['restart_temp_ratio'],
+                            visit=params['visit'],
+                            accept=params['accept'],
+                            maxfun=params['maxfun'],
 
-# 参数设置
-params = {
-    'initial_temp': 5230.0,  # 初始温度
-    'restart_temp_ratio': 1e-4,  # 重启温度比率
-    'visit': 2.62,  # 访问参数
-    'accept': 5.0,  # 接受参数
-    'maxiter': 1000,  # 最大迭代次数
-    'maxfun': 20000,  # 最大函数评估次数
+                            callback=callback)
+    # 打印优化结果
+    print("Optimal value:", result.fun)
+    print("Optimal solution:", result)
 
-}
-
-# 模拟退火算法
-result = dual_annealing(objective_function, bounds,
-                        maxiter=params['maxiter'],
-                        initial_temp=params['initial_temp'],
-                        restart_temp_ratio=params['restart_temp_ratio'],
-                        visit=params['visit'],
-                        accept=params['accept'],
-                        maxfun=params['maxfun'],
-
-                        callback=callback)
-# 打印优化结果
-print("Optimal value:", result.fun)
-print("Optimal solution:", result)
-
-# 绘制优化过程
-plt.plot(progress, label='Objective Function Value')
-plt.xlabel('Iteration')
-plt.ylabel('Objective Function Value')
-plt.title('Optimization Progress with Dual Annealing')
-plt.legend()
-plt.grid(True)
-plt.show()
+    # 绘制优化过程
+    plt.plot(progress, label='Objective Function Value')
+    plt.xlabel('Iteration')
+    plt.ylabel('Objective Function Value')
+    plt.title('Optimization Progress with Dual Annealing')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
 
+if __name__ == "__main__":
+    main()
